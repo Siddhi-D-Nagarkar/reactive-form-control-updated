@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <router-outlet />
+    <div class="container" *ngIf="false">
+      <form [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+        <!-- CheckBox  -->
+        <div class="checkbox-control">
+          <div class="form-check" *ngFor="let item of skillList; let i = index">
+            <label class="form-check-label">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [value]="item"
+                (click)="onClickSkill($event,i)"
+              />
+              {{ item }}
+            </label>
+          </div>
+        </div>
+
+        <div formArrayName="genreList">
+          <div
+            class="form-group"
+            *ngFor="let item of genreList.controls; let i = index"
+          >
+            <div [formGroupName]="i">
+              <label for="">Name</label>
+              <div class="input-btn-section">
+                <input
+                  type="text"
+                  class="form-control"
+                  aria-describedby="helpId"
+                  placeholder="Enter Name"
+                  formControlName="age"
+                />
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="removeField(i)"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="addField()">
+          +
+        </button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-primary" (click)="onPatch()">Patch</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<form [formGroup]="skillsForm">
+  <div formArrayName="selectedSkills">
+    <label *ngFor="let skill of skillList; let i = index">
+      <input type="checkbox" [formControlName]="i" />
+      {{ skill }}
+    </label>
+  </div>
+
+  <button type="button" (click)="saveSkills()">Submit</button>
+  <button type="button" (click)="loadSkills(['Java', 'Angular'])">
+    Load Skills
+  </button>
+  <button type="button" (click)="clearSkills()">Clear</button>
+</form>
