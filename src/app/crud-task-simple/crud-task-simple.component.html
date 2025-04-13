@@ -73,6 +73,19 @@
           <div class="invalid-feedback">{{ validationMessage("status") }}</div>
         </div>
       </div>
+      <!-- Multi-CheckBox  -->
+      <div class="row">
+        <div class="col p-2">
+          <label for="" class="form-check-inline">Skills</label>
+          <div formArrayName="primarySkills">
+            <div class="form-check form-check-inline" *ngFor="let skillEl  of skills;let i = index">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox"  [formControlName]="i"> {{skillEl}}
+              </label>
+            </div>        
+          </div>
+        </div>
+      </div>
 
       <div class="row pt-2">
         <div class="col-2">
@@ -84,7 +97,19 @@
           </button>
         </div>
       </div>
-   
+      <!-- Dynamic Control using Add Button  -->
+      <div class="row pt-2">
+        <div class="col">
+          Add Address
+          <button class="btn btn-sm btn-primary" (click)="onAddAddressControl()"> + </button>
+        </div>
+      </div>
+      <div class="row pt-2" formArrayName="addresses">
+        <div class="col-3 d-flex align-items-center gap-3" *ngFor="let addressControl of addresses.controls;let i = index">
+          <input type="text" class="form-control" [formControlName]="i">
+          <button class="btn-close" (click)="removeAddressControl(i)"></button>
+        </div>
+      </div>
     </form>
   </div>
 
@@ -101,8 +126,10 @@
         <th scope="col">Action</th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let userEl of this.userList;let currentIndex = index">
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+      <tr 
+      cdkDrag
+      *ngFor="let userEl of this.userList;let currentIndex = index">
         <th scope="row">{{currentIndex+1}}</th>
         <td>{{userEl.name}}</td>
         <td>{{userEl.email}}</td>

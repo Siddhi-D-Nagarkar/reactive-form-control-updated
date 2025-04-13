@@ -1,16 +1,22 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { CrudsimpleService } from '../../services/crudsimple.service';
+import {
+  CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-crud-task-simple',
-  imports: [ReactiveFormsModule, NgClass, NgIf, NgFor],
+  imports: [ReactiveFormsModule, NgClass, NgIf, NgFor, DragDropModule],
   templateUrl: './crud-task-simple.component.html',
   styleUrl: './crud-task-simple.component.css',
 })
@@ -20,6 +26,7 @@ export class CrudTaskSimpleComponent implements OnInit {
   alertClass: string = '';
   userList: any[] = [];
   editUserEL: null | any = null;
+  skills = ['Angular', 'Java', 'GoLang', 'Javascript'];
   constructor(private fb: FormBuilder, private apiService: CrudsimpleService) {}
   ngOnInit() {
     this.getUserList();
@@ -28,11 +35,38 @@ export class CrudTaskSimpleComponent implements OnInit {
       gender: this.fb.control(null, [Validators.required]),
       email: this.fb.control('', [Validators.required, Validators.email]),
       status: this.fb.control('', [Validators.required]),
+      primarySkills: this.fb.array([]),
+      addresses: this.fb.array([]),
+    });
+    // Default Check Box to false
+    this.skills.forEach((skillEl) => {
+      this.primarySkills.push(this.fb.control(false));
     });
   }
+  //Getter for
+
+  public get primarySkills(): FormArray {
+    return this.userForm.get('primarySkills') as FormArray;
+  }
+
+  public get addresses(): FormArray {
+    return this.userForm.get('addresses') as FormArray;
+  }
+
   //CREATE
   onSubmit() {
     console.log(this.userForm);
+
+    // Before Sending Data to Backend preparing data from MultiCHeckBox
+    let selectedSkill: any[] = [];
+    (this.primarySkills.value as []).forEach((isSkillSelected, index) => {
+      console.log(isSkillSelected);
+      if (isSkillSelected) {
+        selectedSkill.push(this.skills[index]);
+      }
+    });
+    console.log({ ...this.userForm.value, primarySkills: selectedSkill });
+
     if (this.userForm.invalid) {
       this.userForm.markAllAsTouched();
       return;
@@ -101,7 +135,26 @@ export class CrudTaskSimpleComponent implements OnInit {
   //Edit User
   onClickEditUser(userEl: any) {
     this.editUserEL = userEl;
-    this.userForm.patchValue(userEl);
+
+    // Adding Data From Backend to UI for MultiCheck Box
+    let backendResponse = {
+      selectedSkillFromBackend: ['GoLang'],
+    };
+    let defaultSkillValue = [false, false, false, false];
+    this.skills.forEach((skillEl, index) => {
+      backendResponse.selectedSkillFromBackend.includes(skillEl);
+      defaultSkillValue[index] =
+        backendResponse.selectedSkillFromBackend.includes(skillEl)
+          ? true
+          : false;
+    });
+
+    // Firstly Clear the FormArray and then Push for Connecting the Backend Data for Dyanmic COntrols
+    this.addresses.clear();
+    this.addresses.push(this.fb.control('RAVI'));
+    this.addresses.push(this.fb.control('RAIGAD'));
+
+    this.userForm.patchValue({ ...userEl, primarySkills: defaultSkillValue });
   }
 
   isInvalid(controlName: string): boolean {
@@ -192,5 +245,19 @@ export class CrudTaskSimpleComponent implements OnInit {
 
   closeAlert() {
     this.alertMessage = '';
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.userList, event.previousIndex, event.currentIndex);
+  }
+
+  //Add address control
+  onAddAddressControl() {
+    this.addresses.push(this.fb.control(''));
+  }
+
+  //Remove Address Control
+  removeAddressControl(index: number) {
+    this.addresses.removeAt(index);
   }
 }
