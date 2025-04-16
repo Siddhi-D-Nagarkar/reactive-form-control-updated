@@ -5,19 +5,9 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CrudService } from '../../services/crud.service';
-import { HttpClient } from '@angular/common/http';
 import { NgFor, NgIf } from '@angular/common';
-import {
-  catchError,
-  concat,
-  from,
-  interval,
-  map,
-  of,
-  retry,
-  switchMap,
-} from 'rxjs';
+import { catchError, from, map, of, retry } from 'rxjs';
+import { CrudService } from '../services/crud.service';
 
 @Component({
   selector: 'app-crud-task',
@@ -31,7 +21,6 @@ export class CrudTaskComponent implements OnInit {
   editingItemId: number | null = null;
   locations: string[] = ['Surat', 'Nashik', 'Ahmedabad'];
 
-
   constructor(private fb: FormBuilder, private apiService: CrudService) {
     this.itemForm = this.fb.group({
       name: [''],
@@ -42,7 +31,7 @@ export class CrudTaskComponent implements OnInit {
       color: [''],
       specifications: this.fb.array([]), // Dynamic array for RAM & ROM
       relocatePossible: this.fb.control('Yes'),
-      city: this.fb.control("")
+      city: this.fb.control(''),
     });
   }
   ngOnInit() {

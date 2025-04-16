@@ -7,12 +7,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CrudsimpleService } from '../../services/crudsimple.service';
 import {
   CdkDragDrop,
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { CrudsimpleService } from '../services/crudsimple.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-crud-task-simple',
@@ -21,15 +22,13 @@ import {
   styleUrl: './crud-task-simple.component.css',
 })
 export class CrudTaskSimpleComponent implements OnInit {
-  userForm!: FormGroup;
+  userForm: FormGroup;
   alertMessage: string = '';
   alertClass: string = '';
-  userList: any[] = [];
-  editUserEL: null | any = null;
+  userList: User[] = [];
+  editUserEL: null | User = null;
   skills = ['Angular', 'Java', 'GoLang', 'Javascript'];
-  constructor(private fb: FormBuilder, private apiService: CrudsimpleService) {}
-  ngOnInit() {
-    this.getUserList();
+  constructor(private fb: FormBuilder, private apiService: CrudsimpleService) {
     this.userForm = this.fb.group({
       name: this.fb.control('', [Validators.required]),
       gender: this.fb.control(null, [Validators.required]),
@@ -38,6 +37,10 @@ export class CrudTaskSimpleComponent implements OnInit {
       primarySkills: this.fb.array([]),
       addresses: this.fb.array([]),
     });
+  }
+  ngOnInit() {
+    this.getUserList();
+
     // Default Check Box to false
     this.skills.forEach((skillEl) => {
       this.primarySkills.push(this.fb.control(false));
@@ -58,7 +61,7 @@ export class CrudTaskSimpleComponent implements OnInit {
     console.log(this.userForm);
 
     // Before Sending Data to Backend preparing data from MultiCHeckBox
-    let selectedSkill: any[] = [];
+    let selectedSkill: string[] = [];
     (this.primarySkills.value as []).forEach((isSkillSelected, index) => {
       console.log(isSkillSelected);
       if (isSkillSelected) {
@@ -89,7 +92,7 @@ export class CrudTaskSimpleComponent implements OnInit {
       });
     } else {
       this.apiService
-        .updateItem(this.editUserEL.id, this.userForm.value)
+        .updateItem(this.editUserEL.id.toString(), this.userForm.value)
         .subscribe({
           next: (data) => {
             this.alertMessage = 'User UPdated Successfully';
@@ -106,7 +109,7 @@ export class CrudTaskSimpleComponent implements OnInit {
   // Get User List
   getUserList() {
     this.apiService.getItems().subscribe({
-      next: (data) => {
+      next: (data: User[]) => {
         this.userList = data;
       },
       error: (err) => {
@@ -133,7 +136,7 @@ export class CrudTaskSimpleComponent implements OnInit {
   }
 
   //Edit User
-  onClickEditUser(userEl: any) {
+  onClickEditUser(userEl: User) {
     this.editUserEL = userEl;
 
     // Adding Data From Backend to UI for MultiCheck Box
