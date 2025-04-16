@@ -27,4 +27,41 @@ export class CrudsimpleService {
   deleteItem(id: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+  // Get JSON to build Reactive Form
+  getJson() {
+    return [
+      {
+        type: 'text',
+        label: 'Name',
+        name: 'name',
+        value: '',
+        validations: [
+          {
+            name: 'required',
+            validator: 'required',
+            message: 'Name is required',
+          },
+        ],
+      },
+      {
+        type: 'email',
+        label: 'Email',
+        name: 'email',
+        value: '',
+        validations: [
+          {
+            name: 'required',
+            validator: 'required',
+            message: 'Email is required',
+          },
+          {
+            name: 'pattern',
+            validator: 'email',
+            message: 'Invalid email format',
+          },
+        ],
+      },
+    ];
+  }
 }
