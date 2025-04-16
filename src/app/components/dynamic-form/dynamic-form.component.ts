@@ -8,10 +8,11 @@ import {
 import { CrudsimpleService } from '../../services/crudsimple.service';
 import { NgFor } from '@angular/common';
 import { FormConfig } from '../../models/formConfig.model';
+import { ColorChangeDirective } from '../../directives/color-change.directive';
 
 @Component({
   selector: 'app-dynamic-form',
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule, NgFor,ColorChangeDirective],
   templateUrl: './dynamic-form.component.html',
   styleUrl: './dynamic-form.component.css',
 })
