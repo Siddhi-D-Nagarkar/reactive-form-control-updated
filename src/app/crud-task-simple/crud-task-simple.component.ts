@@ -158,22 +158,8 @@ export class CrudTaskSimpleComponent implements OnInit {
   }
 
   isInvalid(controlName: string): boolean {
-    switch (controlName) {
-      case '':
-        return false;
-        break;
-      case '':
-        return false;
-
-      default:
-        const control = this.userForm.get(controlName);
-        return !!(
-          control &&
-          control.invalid &&
-          (control.touched || control.dirty)
-        );
-        break;
-    }
+    const control = this.userForm.get(controlName);
+    return !!(control && control.invalid && (control.touched || control.dirty));
   }
 
   validationMessage(controlName: string) {
