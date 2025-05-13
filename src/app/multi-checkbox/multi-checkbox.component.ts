@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+
 import { Component } from '@angular/core';
 import {
   FormArray,
@@ -9,7 +9,7 @@ import {
 
 @Component({
   selector: 'app-multi-checkbox',
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule],
   templateUrl: './multi-checkbox.component.html',
   styleUrl: './multi-checkbox.component.css',
 })

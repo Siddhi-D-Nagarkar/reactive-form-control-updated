@@ -1,5 +1,7 @@
 <div cdkDropList>
-  <div cdkDrag *ngFor="let item of items">
-    {{ item }}
-  </div>
+  @for (item of items; track item) {
+    <div cdkDrag>
+      {{ item }}
+    </div>
+  }
 </div>

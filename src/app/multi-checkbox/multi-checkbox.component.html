@@ -1,9 +1,11 @@
 <form [formGroup]="skillsForm">
   <div formArrayName="selectedSkills">
-    <label *ngFor="let skill of skillList; let i = index">
-      <input type="checkbox" [formControlName]="i" />
-      {{ skill }}
-    </label>
+    @for (skill of skillList; track skill; let i = $index) {
+      <label>
+        <input type="checkbox" [formControlName]="i" />
+        {{ skill }}
+      </label>
+    }
   </div>
 
   <button type="button" (click)="saveSkills()">Submit</button>

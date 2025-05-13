@@ -1,21 +1,21 @@
 <form [formGroup]="userForm" class="container p-3">
   <div class="row">
     <div class="col-4">
-      <ng-container *ngFor="let formConfigEl of formConfig; let i = index">
+      @for (formConfigEl of formConfig; track formConfigEl; let i = $index) {
         <label class="form-label">{{ formConfigEl.label }}</label>
         <input
           class="form-control"
           [type]="formConfigEl.type"
           [formControlName]="formConfigEl.name"
-        />
-      </ng-container>
+          />
+        }
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <button class="btn btn-sm btn-primary mt-3" (click)="onSubmit()" appColorChange>
-        Submit
-      </button>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-sm btn-primary mt-3" (click)="onSubmit()" appColorChange>
+          Submit
+        </button>
+      </div>
     </div>
-  </div>
-</form>
+  </form>

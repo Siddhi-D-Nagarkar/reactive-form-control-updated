@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { NgFor } from '@angular/common';
+
 
 @Component({
   selector: 'app-dragdroppractice',
-  imports: [DragDropModule,NgFor],
+  imports: [DragDropModule],
   templateUrl: './dragdroppractice.component.html',
   styleUrl: './dragdroppractice.component.css',
 })

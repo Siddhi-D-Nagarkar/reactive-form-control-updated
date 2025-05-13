@@ -13,7 +13,6 @@ export class ColorChangeDirective {
 
   @HostListener('mouseleave')
   onMouseLeave() {
-    this.render.setStyle(this.elementRef.nativeElement, 'color', '',RendererStyleFlags2.Important);
-
+    this.render.setStyle(this.elementRef.nativeElement, 'color', '',RendererStyleFlags2.Important)
   }
 }

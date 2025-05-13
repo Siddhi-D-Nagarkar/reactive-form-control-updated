@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -17,7 +17,7 @@ import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-crud-task-simple',
-  imports: [ReactiveFormsModule, NgClass, NgIf, NgFor, DragDropModule],
+  imports: [ReactiveFormsModule, NgClass, DragDropModule],
   templateUrl: './crud-task-simple.component.html',
   styleUrl: './crud-task-simple.component.css',
 })

@@ -5,13 +5,13 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+
 import { catchError, from, map, of, retry } from 'rxjs';
 import { CrudService } from '../services/crud.service';
 
 @Component({
   selector: 'app-crud-task',
-  imports: [ReactiveFormsModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule],
   templateUrl: './crud-task.component.html',
   styleUrl: './crud-task.component.css',
 })
