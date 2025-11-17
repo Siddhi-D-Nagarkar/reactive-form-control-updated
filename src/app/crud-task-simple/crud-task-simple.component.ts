@@ -101,7 +101,7 @@ export class CrudTaskSimpleComponent implements OnInit {
             this.getUserList();
             this.userForm.reset();
           },
-          error: () => {},
+          error: () => { },
         });
     }
   }
@@ -131,7 +131,7 @@ export class CrudTaskSimpleComponent implements OnInit {
         console.log('Data Deleted');
         this.getUserList();
       },
-      error: (err) => {},
+      error: (err) => { },
     });
   }
 
@@ -182,14 +182,12 @@ export class CrudTaskSimpleComponent implements OnInit {
           return `Please enter a valid ${this.toLabel(controlName)}`;
 
         case 'minlength':
-          return `${this.toLabel(controlName)} must be at least ${
-            errors['minlength'].requiredLength
-          } characters`;
+          return `${this.toLabel(controlName)} must be at least ${errors['minlength'].requiredLength
+            } characters`;
 
         case 'maxlength':
-          return `${this.toLabel(controlName)} must be at most ${
-            errors['maxlength'].requiredLength
-          } characters`;
+          return `${this.toLabel(controlName)} must be at most ${errors['maxlength'].requiredLength
+            } characters`;
 
         case 'pattern':
           return `${this.toLabel(controlName)} format is invalid`;

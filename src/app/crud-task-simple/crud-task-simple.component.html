@@ -1,18 +1,9 @@
 @if (alertMessage) {
-  <div
-    class="alert position-fixed top-0 end-0 m-3 shadow"
-    [ngClass]="alertClass"
-    role="alert"
-    style="z-index: 1050; min-width: 300px;"
-    >
-    {{ alertMessage }}
-    <button
-      type="button"
-      class="btn-close float-end"
-      aria-label="Close"
-      (click)="closeAlert()"
-    ></button>
-  </div>
+<div class="alert position-fixed top-0 end-0 m-3 shadow" [ngClass]="alertClass" role="alert"
+  style="z-index: 1050; min-width: 300px;">
+  {{ alertMessage }}
+  <button type="button" class="btn-close float-end" aria-label="Close" (click)="closeAlert()"></button>
+</div>
 }
 
 <div class="container">
@@ -23,130 +14,107 @@
       <div class="row">
         <div class="col">
           <label class="form-label">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            aria-describedby="helpId"
-            [ngClass]="{ 'is-invalid': isInvalid('name') }"
-            placeholder=""
-            formControlName="name"
-            />
-            <div class="invalid-feedback">{{ validationMessage("name") }}</div>
-          </div>
-          <div class="col form-check">
-            <label class="form-label">Gender</label>
-            <div class="pt-2">
-              <input
-                type="radio"
-                value="male"
-                [ngClass]="{ 'is-invalid': isInvalid('gender') }"
-                formControlName="gender"
-                />
-                Male
-                <input type="radio" value="female" formControlName="gender" />
-                Female
-                <div class="invalid-feedback">
-                  {{ validationMessage("gender") }}
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <label for="" class="form-label">Email</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="email"
-                [ngClass]="{ 'is-invalid': isInvalid('email') }"
-                />
-                <div class="invalid-feedback">{{ validationMessage("email") }}</div>
-              </div>
-              <div class="col">
-                <label for="" class="form-label">Status</label>
-                <select
-                  class="form-select"
-                  formControlName="status"
-                  [ngClass]="{ 'is-invalid': isInvalid('status') }"
-                  >
-                  <option value="" disabled>Select</option>
-                  <option value="active">Active</option>
-                  <option value="inactive">InActive</option>
-                </select>
-                <div class="invalid-feedback">{{ validationMessage("status") }}</div>
-              </div>
-            </div>
-            <!-- Multi-CheckBox  -->
-            <div class="row">
-              <div class="col p-2">
-                <label for="" class="form-check-inline">Skills</label>
-                <div formArrayName="primarySkills">
-                  @for (skillEl  of skills; track skillEl ; let i = $index) {
-                    <div class="form-check form-check-inline">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"  [formControlName]="i"> {{skillEl}}
-                      </label>
-                    </div>
-                  }
-                </div>
-              </div>
-            </div>
-
-            <div class="row pt-2">
-              <div class="col-2">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  (click)="onSubmit()">
-                  {{editUserEL ? "UPDATE" :  "Submit"}}
-                </button>
-              </div>
-            </div>
-            <!-- Dynamic Control using Add Button  -->
-            <div class="row pt-2">
-              <div class="col">
-                Add Address
-                <button class="btn btn-sm btn-primary" (click)="onAddAddressControl()"> + </button>
-              </div>
-            </div>
-            <div class="row pt-2" formArrayName="addresses">
-              @for (addressControl of addresses.controls; track addressControl; let i = $index) {
-                <div class="col-3 d-flex align-items-center gap-3">
-                  <input type="text" class="form-control" [formControlName]="i">
-                  <button class="btn-close" (click)="removeAddressControl(i)"></button>
-                </div>
-              }
-            </div>
-          </form>
+          <input type="text" class="form-control" aria-describedby="helpId"
+            [ngClass]="{ 'is-invalid': isInvalid('name') }" placeholder="" formControlName="name" />
+          <div class="invalid-feedback">{{ validationMessage("name") }}</div>
         </div>
-
-        <h3 class="mt-3">Item List</h3>
-
-        <table class="table thead-dark">
-          <thead class="">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Gender</th>
-              <th scope="col">Status</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-            @for (userEl of this.userList; track userEl; let currentIndex = $index) {
-              <tr
-                cdkDrag
-                >
-                <th scope="row">{{currentIndex+1}}</th>
-                <td>{{userEl.name}}</td>
-                <td>{{userEl.email}}</td>
-                <td>{{userEl.gender}}</td>
-                <td>{{userEl.status}}</td>
-                <td>
-                  <button type="button" class="btn btn-sm btn-warning" (click)="onClickEditUser(userEl)">Edit</button>
-                  <button class="btn btn-sm btn-danger m-1" (click)="onDelete(userEl.id)">X</button>
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
+        <div class="col form-check">
+          <label class="form-label">Gender</label>
+          <div class="pt-2">
+            <input type="radio" value="male" [ngClass]="{ 'is-invalid': isInvalid('gender') }"
+              formControlName="gender" />
+            Male
+            <input type="radio" value="female" formControlName="gender" />
+            Female
+            <div class="invalid-feedback">
+              {{ validationMessage("gender") }}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <label for="" class="form-label">Email</label>
+          <input type="text" class="form-control" formControlName="email"
+            [ngClass]="{ 'is-invalid': isInvalid('email') }" />
+          <div class="invalid-feedback">{{ validationMessage("email") }}</div>
+        </div>
+        <div class="col">
+          <label for="" class="form-label">Status</label>
+          <select class="form-select" formControlName="status" [ngClass]="{ 'is-invalid': isInvalid('status') }">
+            <option value="" disabled>Select</option>
+            <option value="active">Active</option>
+            <option value="inactive">InActive</option>
+          </select>
+          <div class="invalid-feedback">{{ validationMessage("status") }}</div>
+        </div>
       </div>
+      <!-- Multi-CheckBox  -->
+      <div class="row">
+        <div class="col p-2">
+          <label for="" class="form-check-inline">Skills</label>
+          <div formArrayName="primarySkills">
+            @for (skillEl of skills; track skillEl ; let i = $index) {
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" [formControlName]="i"> {{skillEl}}
+              </label>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+        <div class="col-2">
+          <button type="button" class="btn btn-primary" (click)="onSubmit()">
+            {{editUserEL ? "UPDATE" : "Submit"}}
+          </button>
+        </div>
+      </div>
+      <!-- Dynamic Control using Add Button  -->
+      <div class="row pt-2">
+        <div class="col">
+          Add Address
+          <button class="btn btn-sm btn-primary" (click)="onAddAddressControl()"> + </button>
+        </div>
+      </div>
+      <div class="row pt-2" formArrayName="addresses">
+        @for (addressControl of addresses.controls; track addressControl; let i = $index) {
+        <div class="col-3 d-flex align-items-center gap-3">
+          <input type="text" class="form-control" [formControlName]="i">
+          <button class="btn-close" (click)="removeAddressControl(i)"></button>
+        </div>
+        }
+      </div>
+    </form>
+  </div>
+
+  <h3 class="mt-3">Item List</h3>
+
+  <table class="table thead-dark">
+    <thead class="">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+      @for (userEl of this.userList; track userEl; let currentIndex = $index) {
+      <tr cdkDrag>
+        <th scope="row">{{currentIndex+1}}</th>
+        <td>{{userEl.name}}</td>
+        <td>{{userEl.email}}</td>
+        <td>{{userEl.gender}}</td>
+        <td>{{userEl.status}}</td>
+        <td>
+          <button type="button" class="btn btn-sm btn-warning" (click)="onClickEditUser(userEl)">Edit</button>
+          <button class="btn btn-sm btn-danger m-1" (click)="onDelete(userEl.id)">X</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
